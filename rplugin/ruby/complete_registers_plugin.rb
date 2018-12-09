@@ -45,11 +45,13 @@ Neovim.plugin do |plug|
     end
   end
 
-  plug.autocmd(:CompleteDone, pattern: "*") do |nvim|
+  plug.autocmd(:CompleteDone, pattern: '*') do |nvim|
     completed_item = nvim.get_vvar('completed_item')
     if completed_item['user_data'] == 'complete_registers'
       # fix multiline text
+      last_search = nvim.evaluate("getreg('/')")
       nvim.command('%s/[\x0]/\r/ge')
+      nvim.command("let @/ = '#{last_search}'")
     end
   end
 end
