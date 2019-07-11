@@ -36,8 +36,9 @@ Neovim.plugin do |plug|
           }
         end
         # Phase 2 - returns the list of candidates
+        regexp = base.split('').join('{1}.*')
         completes.select do |h|
-          base.empty? || h[:word] =~ /^#{base}/
+          base.empty? || h[:word] =~ /#{regexp}/
         end
       end
     rescue => _e
